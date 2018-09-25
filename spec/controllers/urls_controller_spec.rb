@@ -33,7 +33,7 @@ RSpec.describe UrlsController, type: :controller do
         expect(response).to render_template(:new)
       end
 
-      it "should render with generated errors" do
+      it "should render with generated errors in @errors" do
         post :create, params: invalid_params
         expect(assigns(:errors)).not_to eq nil
       end
