@@ -18,9 +18,9 @@ RSpec.describe Url, type: :model do
 			expect{ Url.create(long_url: proper_long_url) }.not_to raise_error
 		end
 
-		it "won't create an entry if only one valid long_url is being supplied" do
-			Url.create(long_url: proper_long_url)
-			expect( Url.find_by(long_url: proper_long_url) ).to be nil
+		it "won't create an entry if invalid long_url is being supplied" do
+			Url.create(long_url: improper_long_url)
+			expect( Url.find_by(long_url: improper_long_url) ).to be nil
 		end
 
 		it "takes 2 inputs with proper long url" do
