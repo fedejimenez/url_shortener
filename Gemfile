@@ -19,7 +19,8 @@ group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'
   gem 'shoulda-matchers'
-  gem 'factory_girl_rails'
+  # gem 'factory_girl_rails'
+  gem "factory_bot_rails"
   gem 'shoulda-callback-matchers'
   gem 'rails-controller-testing'
 end
