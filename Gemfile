@@ -30,3 +30,5 @@ group :development do
   gem 'spring'
 end
 
+# Added gems
+gem 'activerecord'
