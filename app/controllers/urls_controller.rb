@@ -8,6 +8,7 @@ class UrlsController < ApplicationController
 			redirect_to urls_path
 		else
  			@errors = @url.errors.full_messages
+ 			# @errors = "error"
 			render 'new'
 		end
 
@@ -30,18 +31,6 @@ class UrlsController < ApplicationController
     @url.destroy
 		redirect_to urls_path
 	end
-
- #  def shorten
-	# 	short = shorter
-	# 	while Url.exists?(short_url: short)
-	# 		short = shorter
-	# 	end
-	# 	short
-	# end
-
-	# def shorter
-	# 	SecureRandom.base64[0..8]
-	# end
 
 	private
 
