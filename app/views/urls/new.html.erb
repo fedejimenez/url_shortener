@@ -1,0 +1,17 @@
+<% if @errors%>
+	</br>
+  <ul>
+  <% @errors.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+  </br>
+<% end %>
+
+<p id="notice"><%= flash[:notice] %></p>
+
+</br>
+
+ <%= render 'form' %>
+
+<%= link_to "Back", urls_path %>

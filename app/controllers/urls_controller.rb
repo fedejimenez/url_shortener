@@ -1,62 +1,70 @@
 class UrlsController < ApplicationController
-  before_action :set_url_by_id, only: [:show]
-  before_action :set_url_by_url, only: [:redirect]
+	# before_action :set_url_by_id, only: [:show]
+  # before_action :set_url_by_url, only: [:redirect]
 
-  def index
-  	# @url = Url.new.find(params[:id])
-  	@url = Url.new
+	def create
+		@url = Url.new(url_params)
+		if !Url.retrieve_short_url(params[:url][:long_url]) && @url.save 
+			redirect_to urls_path
+		else
+ 			@errors = @url.errors.full_messages
+			render 'new'
+		end
+
+	end
+
+ 	def index
+		@urls = Url.all
+	end
+
+ 	def new
+		@url = Url.new
+	end
+
+ 	def show
+		@url = Url.find(params[:id])
+	end
+
+	def destroy
+		@url = Url.find(params[:id])
+    @url.destroy
+		redirect_to urls_path
+	end
+
+ #  def shorten
+	# 	short = shorter
+	# 	while Url.exists?(short_url: short)
+	# 		short = shorter
+	# 	end
+	# 	short
+	# end
+
+	# def shorter
+	# 	SecureRandom.base64[0..8]
+	# end
+
+	private
+
+  def url_params
+    params.require(:url).permit(:long_url)
   end
 
-  def show
-    respond_to do |format|
-      format.html
-      format.pdf { render pdf: 'contents' }
-    end
-  end
 
-  def redirect
-    if @url
-      redirect_to @url.original
-    else
-      not_found
-    end
-  end
+	# def redirect
+ #    if @url
+ #      redirect_to @url.long_url
+ #    else
+ #      not_found
+ #    end
+ #  end
 
-  def new
-    @url = Url.new
-  end
+  # def set_url_by_id
+  # 	@url = Url.find(params[:id])
+  # end
 
-  def create
-    @url = Url.new(shortened_url_params)
-    user = current_user
-    @url.user_id = user.id
-    @url.shorten!
-    new_id = @url.id
+  # def set_url_by_url
+  #   url_raw = BASE_PATH + '/' + params[:id]
+  #   @url = Url.where(shortened: url_raw).first
+  # end
 
-    ShorteningNotifier.shortened(user, @url).deliver
-
-    respond_to do |format|
-      if @url.save
-        format.js
-        format.html { redirect_to action: :show, id: new_id, notice: 'Yeah!' }
-      else
-        format.html { render :new }
-      end
-    end
-  end
-
-  private
-
-  def set_url_by_id
-    @url = Url.find(params[:id])
-  end
-
-  def set_url_by_url
-    shortened_url_raw = BASE_PATH + '/' + params[:id]
-    @url = Url.where(shortened: shortened_url_raw).first
-  end
-
-  def shortened_url_params
-    params.require(:url).permit(:original)
-  end
 end
