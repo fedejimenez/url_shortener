@@ -9,14 +9,8 @@ class Url < ActiveRecord::Base
 
 	def self.retrieve_short_url(long_url)
 		url = find_by(long_url: long_url)
-		# url.short_url if url
-		if url
-			url.short_url
-			return true
-		else
-			@errors.push("Short url already exists")
-			return false
-		end
+		url.short_url if url
+
 	end
 
 	def generate_short_url

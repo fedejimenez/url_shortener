@@ -1,16 +1,19 @@
 <h3>URL SHORTENER</h3>
 
 <%= link_to "Shorten a URL!", new_url_path %>
- <table>
-	<tr>
-		<th> Original URL </th>
-		<th> Shortened URL </th>
-	</tr>
- 	<% @urls.each do |url| %>
+<div class="container">
+	 <table class="table table responsive">
 		<tr>
-			<td> <%= link_to url.long_url, url_path(url) %> </td>
-			<td> <%= url.short_url %> </td>
-			<td> <%= link_to 'Delete', url_path(url), method: :delete %> </td>
+			<th> Original URL </th>
+			<th> Shortened URL </th>
+			<th> Action </th>
 		</tr>
-	<% end %>
-</table> 
+	 	<% @urls.each do |url| %>
+			<tr>
+				<td> <%= link_to url.long_url, "#{url.long_url}", target: :_blank%> </td>
+				<td> <%= link_to url.short_url, "#{url.long_url}", target: :_blank %> </td>
+				<td> <%= link_to 'Delete', url_path(url), method: :delete %> </td>
+			</tr>
+		<% end %>
+	</table> 
+</div>

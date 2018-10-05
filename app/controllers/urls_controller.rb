@@ -8,7 +8,10 @@ class UrlsController < ApplicationController
 			redirect_to urls_path
 		else
  			@errors = @url.errors.full_messages
- 			# @errors = "error"
+			if Url.retrieve_short_url(params[:url][:long_url])
+				@errors << "Shortlink already exists for this url"
+ 				# @errors = "error"
+ 			end
 			render 'new'
 		end
 

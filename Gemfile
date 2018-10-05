@@ -33,6 +33,9 @@ end
 
 # Added gems
 gem 'activerecord'
+gem 'activerecord-import'
+gem 'bootstrap', '~> 4.0.0'
+gem 'mini_racer'
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
